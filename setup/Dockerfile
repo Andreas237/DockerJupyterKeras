@@ -11,7 +11,4 @@ RUN python3 -m pip install \
     cuxfilter-cu12==23.12.* cucim-cu12==23.12.* pylibraft-cu12==23.12.* \
     raft-dask-cu12==23.12.*
 
-# Install PyTorch
-# RUN python3 -m pip install torch torchvision torchaudio -f https://download.pytorch.org/whl/cu111/torch_stable.html
-
 WORKDIR /work
