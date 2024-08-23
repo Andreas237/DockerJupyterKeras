@@ -35,6 +35,7 @@ run() {
     if [[ "$1" == "cpu" ]]; then
     printf "Running CPU only container\n"
     docker run \
+    --shm-size=1G \
     --ipc=host \
     --ulimit memlock=-1 \
     -it \
@@ -49,6 +50,7 @@ run() {
     # printf "Running GPU enabled container\n"
     # docker run \
     # --gpus all \
+    # --shm-size=1G \
     # --ipc=host \
     # --ulimit memlock=-1 \
     # -it \
