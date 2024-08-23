@@ -15,12 +15,13 @@ help() {
 
 
 run() {
-    echo "run function received argument $1"
-    # NAME=$(cat setup/DOCKER_IMAGE_NAME)
-    # NB_LOCATION_HOST=./notebooks/
-    # CONTAINER_WORKDIR=/work
-    # CONTAINER_DATADIR=${CONTAINER_WORKDIR}/data
-    # DATASETS_PATH_HOST=./datasets/
+    echo "run function received argument '$1'"
+    NAME=$(cat setup/DOCKER_IMAGE_NAME)
+    NB_LOCATION_HOST=./notebooks/
+    DATASETS_PATH_HOST=${NB_LOCATION_HOST}/datasets/
+    CONTAINER_WORKDIR=/work
+    CONTAINER_DATADIR=${CONTAINER_WORKDIR}/data
+    JUPYTER_PORT=8888
 
     # echo "-----------------------------------------------"
     # echo "+++++++++++++++++++++++++++++++++++++++++++++++"
@@ -31,19 +32,21 @@ run() {
     # echo "-----------------------------------------------"
 
 
-    # if [[ "$1" == "cpu" ]]; then
-    # docker run \
-    # --ipc=host \
-    # --ulimit memlock=-1 \
-    # -it \
-    # -p 8080:8888 \
-    # --read-only -v ${DATASETS_PATH_HOST}:${CONTAINER_DATADIR} \
-    # -v ${NB_LOCATION_HOST}:${CONTAINER_WORKDIR} \
-    # --rm \
-    # ${NAME} jupyter-lab --ip 0.0.0.0 --no-browser ${CONTAINER_WORKDIR}
+    if [[ "$1" == "cpu" ]]; then
+    printf "Running CPU only container\n"
+    docker run \
+    --ipc=host \
+    --ulimit memlock=-1 \
+    -it \
+    -p 8888:8888 \
+    --read-only -v ${DATASETS_PATH_HOST}:${CONTAINER_DATADIR} \
+    -v ${NB_LOCATION_HOST}:${CONTAINER_WORKDIR} \
+    --rm \
+    ${NAME} jupyter-lab --ip 0.0.0.0 --port=${JUPYTER_PORT} --no-browser ${CONTAINER_WORKDIR}
 
 
     # elif [[ $1 == "gpu" ]]; then
+    # printf "Running GPU enabled container\n"
     # docker run \
     # --gpus all \
     # --ipc=host \
@@ -54,13 +57,13 @@ run() {
     # -v ${NB_LOCATION_HOST}:${CONTAINER_WORKDIR} \
     # -v 
     # --rm \
-    # nvcr.io/nvidia/tensorflow:23.09-tf2-py3 jupyter-lab --ip 0.0.0.0 --no-browser ${CONTAINER_WORKDIR}
+    # nvcr.io/nvidia/tensorflow:23.09-tf2-py3 jupyter-lab --ip 0.0.0.0 --port=${JUPYTER_PORT} --no-browser ${CONTAINER_WORKDIR}
 
     # else
     # echo "Received $1"
     # echo 'Use "gpu" to use a GPU accelerated container with only Tensorflow'
     # echo 'Use "deepsig" to use a CPU only container with the libraries needed for the DeepSig workbook'
-    # fi
+    fi
 }
 
 
