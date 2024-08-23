@@ -17,4 +17,6 @@ RUN python3 -m pip install \
 
 RUN python3 -m pip install --upgrade jupyterlab
 
+RUN mkdir -p /work/datasets
+
 WORKDIR /work

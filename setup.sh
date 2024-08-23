@@ -20,16 +20,8 @@ run() {
     NB_LOCATION_HOST=./notebooks/
     DATASETS_PATH_HOST=${NB_LOCATION_HOST}/datasets/
     CONTAINER_WORKDIR=/work
-    CONTAINER_DATADIR=${CONTAINER_WORKDIR}/data
+    CONTAINER_DATADIR=${CONTAINER_WORKDIR}/datasets/
     JUPYTER_PORT=8888
-
-    # echo "-----------------------------------------------"
-    # echo "+++++++++++++++++++++++++++++++++++++++++++++++"
-    # echo
-    # echo "Use the Jupyter URL provided, but change 'hostname' to 'localhost' and use port '8080' rather than '8888'."
-    # echo
-    # echo "+++++++++++++++++++++++++++++++++++++++++++++++"
-    # echo "-----------------------------------------------"
 
 
     if [[ "$1" == "cpu" ]]; then
@@ -40,10 +32,9 @@ run() {
     --ulimit memlock=-1 \
     -it \
     -p 8888:8888 \
-    --read-only -v ${DATASETS_PATH_HOST}:${CONTAINER_DATADIR} \
     -v ${NB_LOCATION_HOST}:${CONTAINER_WORKDIR} \
     --rm \
-    ${NAME} jupyter-lab --ip 0.0.0.0 --port=${JUPYTER_PORT} --no-browser ${CONTAINER_WORKDIR}
+    ${NAME} jupyter-lab --ip 0.0.0.0 --port=${JUPYTER_PORT} --no-browser ${CONTAINER_WORKDIR} --allow-root
 
 
     # elif [[ $1 == "gpu" ]]; then
@@ -80,7 +71,6 @@ fi
 pushd setup/
 current_dir=`pwd`
 ./build.sh
-# ./run.sh $1 ${current_dir}
 popd
 run $1
 
