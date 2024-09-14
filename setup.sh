@@ -41,6 +41,7 @@ run() {
     elif [[ $1 == "gpu" ]]; then
     printf "Running GPU enabled container\n"
     docker run \
+    -- privileged \
     --gpus all \
     --shm-size=1G \
     --ipc=host \
