@@ -1,14 +1,14 @@
 #!/bin/bash
 #TODO: cleanup the incontainer path
 NAME=$(cat DOCKER_IMAGE_NAME)
-NB_LOCATION_HOST=./notebooks/
+NB_LOCATION_HOST=./notebooks
 CONTAINER_WORKDIR=/work
-DATASETS_PATH_HOST=./datasets/
+DATASETS_PATH_HOST=$NB_LOCATION_HOST/datasets/
 
 # echo "-----------------------------------------------"
 # echo "+++++++++++++++++++++++++++++++++++++++++++++++"
 # echo
-# echo "Use the Jupyter URL provided, but change 'hostname' to 'localhost' and use port '8080' rather than '8888'."
+# echo "Use the Jupyter URL provided, but change 'hostname' to 'localhost' and use port '8080' rather than '8080'."
 # echo
 # echo "+++++++++++++++++++++++++++++++++++++++++++++++"
 # echo "-----------------------------------------------"
@@ -19,11 +19,11 @@ docker run \
 --ipc=host \
 --ulimit memlock=-1 \
 -it \
--p 8080:8888 \
+-p 8080:8080 \
 --read-only -v ${DATASETS_PATH_HOST}:${CONTAINER_WORKDIR} \
 -v ${NB_LOCATION_HOST}:${CONTAINER_WORKDIR} \
 --rm \
-${NAME} jupyter-lab --ip 0.0.0.0 --no-browser ${CONTAINER_WORKDIR}
+${NAME} jupyter-lab --ip 0.0.0.0 --port 8080 --no-browser ${CONTAINER_WORKDIR}
 
 
 elif [[ $1 == "gpu" ]]; then
@@ -32,12 +32,11 @@ docker run \
 --ipc=host \
 --ulimit memlock=-1 \
 -it \
--p 8080:8888 \
+-p 8080:8080 \
 --read-only -v ${DATASETS_PATH_HOST}:${CONTAINER_WORKDIR} \
 -v ${NB_LOCATION_HOST}:${CONTAINER_WORKDIR} \
--v 
 --rm \
-nvcr.io/nvidia/tensorflow:23.09-tf2-py3 jupyter-lab --ip 0.0.0.0 --no-browser ${CONTAINER_WORKDIR}
+nvcr.io/nvidia/tensorflow:23.09-tf2-py3 jupyter-lab --ip 0.0.0.0 --port 8080 --no-browser ${CONTAINER_WORKDIR}
 
 else
 echo "Received $1"
