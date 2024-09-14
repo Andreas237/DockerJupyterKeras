@@ -31,26 +31,13 @@ run() {
         --ipc=host \
         --ulimit memlock=-1 \
         -it \
-        -p 8888:8888 \
+        -p ${JUPYTER_PORT}:${JUPYTER_PORT} \
         -v ${NB_LOCATION_HOST}:${CONTAINER_WORKDIR} \
         --rm \
         ${NAME} jupyter-lab --ip 0.0.0.0 --port=${JUPYTER_PORT} --no-browser ${CONTAINER_WORKDIR} --allow-root
     
 
 
-    # elif [[ $1 == "gpu" ]]; then
-    # printf "Running GPU enabled container\n"
-    # docker run \
-    # --gpus all \
-    # --shm-size=1G \
-    # --ipc=host \
-    # --ulimit memlock=-1 \
-    # -it \
-    # -p 8080:8888 \
-    # --read-only -v ${DATASETS_PATH_HOST}:${CONTAINER_DATADIR} \
-    # -v ${NB_LOCATION_HOST}:${CONTAINER_WORKDIR} \
-    # --rm \
-    # nvcr.io/nvidia/tensorflow:23.09-tf2-py3 jupyter-lab --ip 0.0.0.0 --port=${JUPYTER_PORT} --no-browser ${CONTAINER_WORKDIR}
     elif [[ $1 == "gpu" ]]; then
     printf "Running GPU enabled container\n"
     docker run \
@@ -59,7 +46,7 @@ run() {
     --ipc=host \
     --ulimit memlock=-1 \
     -it \
-    -p 8080:8888 \
+    -p ${JUPYTER_PORT}:${JUPYTER_PORT} \
     -v ${NB_LOCATION_HOST}:${CONTAINER_WORKDIR} \
     --rm \
     nvcr.io/nvidia/tensorflow:23.09-tf2-py3 jupyter-lab --ip 0.0.0.0 --port=${JUPYTER_PORT} --no-browser ${CONTAINER_WORKDIR}
