@@ -1,5 +1,6 @@
 #!/bin/bash
 
+
 help() {
     echo
     echo
@@ -21,7 +22,7 @@ run() {
     DATASETS_PATH_HOST=${NB_LOCATION_HOST}/datasets/
     CONTAINER_WORKDIR=/work
     CONTAINER_DATADIR=${CONTAINER_WORKDIR}/datasets/
-    JUPYTER_PORT=8888
+    export JUPYTER_PORT=8888
 
 
     if [[ "$1" == "cpu" ]]; then
@@ -34,14 +35,14 @@ run() {
         -p ${JUPYTER_PORT}:${JUPYTER_PORT} \
         -v ${NB_LOCATION_HOST}:${CONTAINER_WORKDIR} \
         --rm \
-        ${NAME} jupyter-lab --ip 0.0.0.0 --port=${JUPYTER_PORT} --no-browser ${CONTAINER_WORKDIR} --allow-root
+        ${NAME} jupyter-lab --allow-root --ip 0.0.0.0 --port=${JUPYTER_PORT} --no-browser ${CONTAINER_WORKDIR} --allow-root
     
 
 
     elif [[ $1 == "gpu" ]]; then
     printf "Running GPU enabled container\n"
     docker run \
-    -- privileged \
+    --privileged \
     --gpus all \
     --shm-size=1G \
     --ipc=host \
@@ -50,7 +51,7 @@ run() {
     -p ${JUPYTER_PORT}:${JUPYTER_PORT} \
     -v ${NB_LOCATION_HOST}:${CONTAINER_WORKDIR} \
     --rm \
-    nvcr.io/nvidia/tensorflow:23.09-tf2-py3 jupyter-lab --ip 0.0.0.0 --port=${JUPYTER_PORT} --no-browser ${CONTAINER_WORKDIR}
+    ${NAME} jupyter-lab --allow-root --ip 0.0.0.0 --port=${JUPYTER_PORT} --no-browser ${CONTAINER_WORKDIR}
 
     else
     echo "Received $1"
@@ -73,4 +74,3 @@ current_dir=`pwd`
 ./build.sh
 popd
 run $1
-
