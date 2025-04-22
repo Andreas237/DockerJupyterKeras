@@ -6,15 +6,17 @@ Collaboration is installed by default (via `jupyter_collaboration`)!  So if you 
 
 # How to use it
 
-Use `chmod +x run.sh` to make the builds the Dockerfile in `setup/` and opens a Jupyter notebook which mounts the `notebooks/` directory for reading and writing and `data/` for reading.  `notebooks/` will show up as your working directory, and there will be a subdirectory `data/` with your data.
+Use `chmod +x setup.sh` to make the builds the Dockerfile in `setup/` and opens a Jupyter notebook which mounts the `notebooks/` directory for reading and writing and `data/` for reading.  `notebooks/` will show up as your working directory, and there will be a subdirectory `data/` with your data.
 
-Pass `cpu`, `gpu`, or `help` to `run.sh`.
+Options:
+- `gpu`: run the Docker image with all system GPUs attached.
+- `cpu`: run the Docker image with just your CPU.
+- `help`: prints a help message.
 
-`gpu`: run the Docker image with all system GPUs attached.
 
-`cpu`: run the Docker image with just your CPU.
+Example Usage: `./setup.sh gpu`
 
-`help`: prints a help message.
+
 
 
 # Feedback
