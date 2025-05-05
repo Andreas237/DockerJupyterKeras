@@ -18,6 +18,7 @@ help() {
 run() {
     echo "run function received argument '$1'"
     NAME=$(cat setup/DOCKER_IMAGE_NAME)
+    APP_NAME=datascience
     NB_LOCATION_HOST=./notebooks/
     DATASETS_PATH_HOST=${NB_LOCATION_HOST}/datasets/
     CONTAINER_WORKDIR=/work
@@ -28,6 +29,7 @@ run() {
     if [[ "$1" == "cpu" ]]; then
         printf "Running CPU only container\n"
         docker run \
+        --name ${APP_NAME} \
         --shm-size=1G \
         --ipc=host \
         --ulimit memlock=-1 \
@@ -42,6 +44,7 @@ run() {
     elif [[ $1 == "gpu" ]]; then
     printf "Running GPU enabled container\n"
     docker run \
+    --name ${APP_NAME} \
     --privileged \
     --gpus all \
     --shm-size=1G \
@@ -51,7 +54,9 @@ run() {
     -p ${JUPYTER_PORT}:${JUPYTER_PORT} \
     -v ${NB_LOCATION_HOST}:${CONTAINER_WORKDIR} \
     --rm \
-    ${NAME} jupyter-lab --allow-root --ip 0.0.0.0 --port=${JUPYTER_PORT} --no-browser ${CONTAINER_WORKDIR}
+    ${NAME} jupyter lab --allow-root --ip 0.0.0.0 --port=${JUPYTER_PORT} --no-browser \
+    --ServerApp.password='' \
+    --ServerApp.disable_check_xsrf=True ${CONTAINER_WORKDIR}
 
     else
     echo "Received $1"
