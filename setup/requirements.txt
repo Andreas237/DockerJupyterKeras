@@ -2,7 +2,7 @@
 git-filter-repo
 h5py
 jupyterlab
-keras==2.13.1
+keras
 lightning
 matplotlib
 mlflow==2.22.0

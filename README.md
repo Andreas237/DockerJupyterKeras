@@ -13,7 +13,9 @@ Collaboration is installed by default (via `jupyter_collaboration`)!  So if you 
 
 # How to use it
 
-Use `chmod +x setup.sh` to make the builds the Dockerfile in `setup/` and opens a Jupyter notebook which mounts the `notebooks/` directory for reading and writing and `data/` for reading.  `notebooks/` will show up as your working directory, and there will be a subdirectory `data/` with your data.
+Use `chmod +x setup.sh` to make the builds the Dockerfile in `setup/` and opens a Jupyter notebook which mounts the `notebooks/` directory for reading and writing and `notebooks/datasets/` for your data.  `notebooks/` will show up as your working directory.
+
+`setup.sh` specifies port, app name, other fields used in `docker run`.  If you use this repo for multiple projects you will need to change the port and app name used for the running container.
 
 Options:
 - `gpu`: run the Docker image with all system GPUs attached.
