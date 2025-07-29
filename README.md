@@ -10,6 +10,14 @@ Collaboration is installed by default (via `jupyter_collaboration`)!  So if you 
 
 - [Install nvidia-container-toolkit](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html)
 
+- Create an NVIDIA GPU Cloud account to pull the base container image https://org.ngc.nvidia.com.
+-- Create an API key with the "NGC Repository" permission https://org.ngc.nvidia.com/setup/api-keys, then login with 
+```
+docker login nvcr.io
+Username: $oauthtoken
+Password: <your api key here>
+``` 
+
 
 # How to use it
 
