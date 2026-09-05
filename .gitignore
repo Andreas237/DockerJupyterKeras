@@ -1,3 +1,5 @@
-notebooks/*
+notebooks/datasets/*
+notebooks/.venv
+notebooks/.ipynb_checkpoints
 .venv/
 datasets/*

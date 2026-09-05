@@ -1,7 +1,6 @@
 
 git-filter-repo
 h5py
-ipywidgets
 jupyterlab
 keras==2.13.1
 lightning

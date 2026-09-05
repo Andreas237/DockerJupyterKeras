@@ -37,8 +37,8 @@ run() {
         -p ${JUPYTER_PORT}:${JUPYTER_PORT} \
         -v ${NB_LOCATION_HOST}:${CONTAINER_WORKDIR} \
         --rm \
-        ${NAME} jupyter-lab --allow-root --ip 0.0.0.0 --port=${JUPYTER_PORT} --no-browser ${CONTAINER_WORKDIR} --allow-root
-    
+        ${NAME} --allow-root --ip 0.0.0.0 --port=${JUPYTER_PORT} --no-browser ${CONTAINER_WORKDIR}
+
 
 
     elif [[ $1 == "gpu" ]]; then
@@ -50,13 +50,12 @@ run() {
     --shm-size=1G \
     --ipc=host \
     --ulimit memlock=-1 \
+    --ulimit stack=67108864 \
     -it \
     -p ${JUPYTER_PORT}:${JUPYTER_PORT} \
     -v ${NB_LOCATION_HOST}:${CONTAINER_WORKDIR} \
     --rm \
-    ${NAME} jupyter lab --allow-root --ip 0.0.0.0 --port=${JUPYTER_PORT} --no-browser \
-    --ServerApp.password='' \
-    --ServerApp.disable_check_xsrf=True ${CONTAINER_WORKDIR}
+    ${NAME} --allow-root --ip 0.0.0.0 --port=${JUPYTER_PORT} --no-browser --ServerApp.password='' --ServerApp.disable_check_xsrf=True ${CONTAINER_WORKDIR}
 
     else
     echo "Received $1"
